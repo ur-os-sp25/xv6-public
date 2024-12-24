@@ -1,4 +1,37 @@
-NOTE: we have stopped maintaining the x86 version of xv6, and switched
+# Building and Running xv6
+
+## Ubuntu 22.04 in WSL
+
+If you are running windows, you must install WSL2 and choose the Ubuntu 22.04 image.
+From there, make sure you install the following:
+```
+sudo apt install qemu qemu-system-x86 gcc-multilib
+```
+Then, the original Makefile will work with:
+```
+make
+```
+then launch within your terminal with:
+```
+make qemu-nox
+```
+
+## Mac OSX
+
+You need to have [`homebrew`](https://brew.sh/) installed and then you install the following:
+```
+brew tap nativeos/i386-elf-toolchain
+brew install i386-elf-gcc qemu
+```
+The `Makefile` is modified to remove a few flags that appear to prevent compilation otherwise.
+Use the same process as in Ubuntu to build and run:
+```
+make
+make qemu-nox
+```
+
+# Note
+MIT stopped maintaining the x86 version of xv6, and switched
 our efforts to the RISC-V version
 (https://github.com/mit-pdos/xv6-riscv.git)
 
@@ -6,7 +39,7 @@ xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern x86-based multiprocessor using ANSI C.
 
-ACKNOWLEDGMENTS
+# Acknowledgements
 
 xv6 is inspired by John Lions's Commentary on UNIX 6th Edition (Peer
 to Peer Communications; ISBN: 1-57398-013-7; 1st edition (June 14,
@@ -40,12 +73,3 @@ Copyright 2006-2018 Frans Kaashoek, Robert Morris, and Russ Cox.
 ERROR REPORTS
 
 We don't process error reports (see note on top of this file).
-
-BUILDING AND RUNNING XV6
-
-To build xv6 on an x86 ELF machine (like Linux or FreeBSD), run
-"make". On non-x86 or non-ELF machines (like OS X, even on x86), you
-will need to install a cross-compiler gcc suite capable of producing
-x86 ELF binaries (see https://pdos.csail.mit.edu/6.828/).
-Then run "make TOOLPREFIX=i386-jos-elf-". Now install the QEMU PC
-simulator and run "make qemu".
